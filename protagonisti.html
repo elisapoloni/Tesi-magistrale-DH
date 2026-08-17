@@ -1,0 +1,98 @@
+<!DOCTYPE html> <!--stringa di codice che dà una serie di informazioni utili al browser per aprire la pagina: dichiara il tipo di documento -->
+<html lang = "it"> <!-- attributo lang per specificare la lingua della pagina -->
+<head> <!-- contiene tutte le istruzioni necessarie al browser e ai motori di ricerca per capire cos'è la pagina e come deve apparire-->
+	<title>Italian Monuments Men and Women</title>
+	<meta charset="UTF-8" /> <!-- l'attributo charset specifica la codifica dei caratteri per il documento HTML -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+	<!-- tag Viewport: influisce sul modo in cui i contenuti vengono visualizzati sui dispositivi mobili. 
+	Con width=device-width ci si assicura che la pagina venga ridimensionata per corrispondere alla larghezza dello schermo, che varierà anche a seconda del dispositivo dell'utente. 
+	initial-scale=1.0 imposta il livello di zoom iniziale quando la pagina viene caricata per la prima volta dal browser -->
+	<!--metadati DC-->
+	<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"> <!-- dichiaro che sto usando i metadati Dublin Core: standard internazionale per la descrizione di risorse digitali e non digitali-->
+	<META NAME="DC.Title" CONTENT="Italian Monuments Men and Women">
+	<META NAME="DC.Creator" CONTENT="Poloni, Elisa">
+	<META NAME="DC.Subject" CONTENT="Salvataggio">
+	<META NAME="DC.Subject" CONTENT="http://purl.org/bncf/tid/8167"> <!--Beni culturali nel Nuovo Soggettario BNC-->
+	<META NAME="DC.Subject" CONTENT="http://purl.org/bncf/tid/16826"> <!--Seconda Guerra Mondiale nel Nuovo Soggettario BNC-->
+	<META NAME="DC.Description" CONTENT="Progetto realizzato per la tesi di laurea magistrale">
+	<META NAME="DC.Publisher" CONTENT="GitHub">
+	<META NAME="DC.Date" CONTENT="2026-10-12">
+	<META NAME="DC.Type" CONTENT="Web App">
+	<META NAME="DC.Format" CONTENT="HTML/CSS/JS">
+	<META NAME="DC.Identifier" CONTENT="#">
+	<META NAME="DC.Source" CONTENT="https://www.monumentsmenandwomenfnd.org/">
+	<META NAME="DC.Language" CONTENT="Italiano">
+	<META NAME="DC.Relation" CONTENT="https://www.monumentsmenandwomenfnd.org/">
+	<META NAME="DC.Coverage" CONTENT="http://vocab.getty.edu/page/tgn/7004847"> <!--Bologna nel Getty Thesaurus of Geographic Names-->
+	<META NAME="DC.Rights" content="This work is licensed under CC BY-NC-ND 4.0"> <!--BY: Credit must be given to you, the creator; NC: Only noncommercial use of your work is permitted. Noncommercial means not primarily intended for or directed towards commercial advantage or monetary compensation; ND: No derivatives or adaptations of your work are permitted.-->
+	<!-- bootstrap css 5.3, è il framework che regola il layout della pagina, la disposizione dei contenuti, lo stile dei componenti e la responsività della pagina, cioè la capacità di adattarsi a diversi dispositivi e dimensioni dello schermo -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<!--icone bootstrap: libreria di icone vettoriali che possono essere utilizzate nelle pagine web per migliorare l'aspetto visivo e l'usabilità -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">	
+	<!--css: file esterno che contiene le regole di stile per la pagina web, come colori, font, layout e altri aspetti visivi --> 
+	<link rel=stylesheet href=style/style.css>
+	<!--favicon: icona che appare nella barra del browser -->
+	<link rel="shortcut icon" href="img/favicon.ico">
+</head>
+<body>
+	<header id="navbar-placeholder"> <!-- è la parte introduttiva della pagina che contiene titolo e barra di navigazione del sito-->
+		<!-- la barra di navigazione è nella cartella components e viene richiamata con javascript perchè si ripete in tutte le pagine -->		
+	</header>
+	<main>
+		<section class="container-fluid bg-secondary text-white py-4">
+			<h2 class="page-title">I PROTAGONISTI</h2>
+		</section>
+
+		<section class="container-fluid mt-3"> <!-- container-fluid = larghezza al 100% del contenitore -->
+			<!-- Breadcrumbs -->
+			<nav aria-label="breadcrumb">
+				<!-- ol = ordered list, lista ordinata; breadcrumb = classe di bootstrap che serve a creare i breadcrumbs; 
+				 id = identificatore unico per l'elemento (che userò in js per automatizzare) -->
+				<ol class="breadcrumb" id="breadcrumb-placeholder"></ol> 
+			</nav>
+
+			<div class="row">
+				<!-- COLONNA SX: FILTRI -->
+				<!-- su mobile sta sopra e occupa tutto lo schermo in larghezza (col-12), su desktop occupa 2/12 della larghezza e sta a sinistra -->
+				<!-- lg = large (desktop) -->
+				<aside class="col-12 col-lg-2 sidebar-filtri"> <!-- aside viene usato per inserire qualcosa che non fa parte del contenuto principale -->
+					<!-- sticky-lg-top = posiziona l'elemento in modo che rimanga visibile nella parte superiore della finestra del browser quando 
+					 l'utente scorre la pagina verso il basso, ma solo su schermi di dimensioni "large" (desktop) o superiori -->
+					<!-- top: 20px = distanza tra la parte superiore della finestra del browser e l'elemento sticky -->
+					<div class="sticky-lg-top" style="top: 20px;">						
+						<h5 class="mb-3">Filtra per:</h5>
+						<div class="dropdown mb-3"> <!--dropdown = classe bootstrap per creare un menu a tendina -->
+							<!--dropdown-toggle = applica una freccina verso il basso accanto al testo del bottone per indicare che si tratta di un menu a tendina -->
+							<!--data-bs-toggle = attributo che indica a Bootstrap di gestire il comportamento del menu a tendina, in questo caso "dropdown" cioè aprire il menu a tendina quando si clicca sul bottone -->
+							<button class="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+								Ruolo
+							</button>
+							<ul class="dropdown-menu w-100 p-2" id="filtro-ruolo">
+								<!-- js tramite l'id metterà qui il filtro -->
+							</ul>
+						</div>
+					</div>
+				</aside>
+
+				<!-- COLONNA DX: CARD -->
+				<!-- su mobile sta sotto e occupa tutto lo schermo in larghezza (col-12), su desktop occupa 10/12 della larghezza e sta a destra -->
+				<div class="col-12 col-lg-10">
+					<!-- g-4 significa gutter 4, cioè lo spazio tra le colonne della griglia di Bootstrap -->
+					<div id="container-protagonisti" class="row g-4">
+						<!-- JS metterà qui le card attraverso l'id -->
+					</div>
+				</div>
+			</div> <!-- chiusa row -->
+		</section> <!-- chiuso container-fluid -->
+</main>
+	<!--footer-->
+	<footer id="footer-placeholder"> <!--chiusura del sito-->
+		<!--footer è nella cartella components e viene richiamato con javascript perchè si ripete in tutte le pagine-->
+	</footer>
+	<!--js-->
+	<script src="js/main.js"></script> <!-- collegamento al file JavaScript principale -->
+	<script src="js/protagonisti.js"></script> <!-- collegamento al file JavaScript per la gestione della pagina dei protagonisti -->
+	<!--collegamento alla libreria di Bootstrap 5.3 per il funzionamento dei componenti interattivi come il carosello e la barra di navigazione -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
