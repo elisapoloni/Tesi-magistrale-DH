@@ -1,0 +1,279 @@
+/* =============
+   1. GENERALE
+   =============*/
+
+.body { /** Imposta le caratteristiche di base del body della pagina */
+  height: 100%; /** Imposta l'altezza del body al 100% della finestra del browser */
+  font-family: 'Arial', sans-serif; /** Imposta il font del testo */
+  margin: 0; /** Rimuove i margini predefiniti del body */
+  line-height: 1.6; /** Imposta l'altezza della linea del testo, in questo caso aumenta la distanza tra le righe del testo */
+  background-color: #f8f9fa;
+}
+
+.link {color: #800000; text-decoration: none;} /** Imposta il colore e la decorazione dei link */
+.link:hover {color: #800000; text-decoration: underline;} /** Imposta il colore e la decorazione dei link al passaggio del mouse */
+
+.page-title {
+    text-align: center; /* Centra il titolo della pagina */
+    width: 100%; /* Imposta la larghezza del titolo al 100% del contenitore */
+    margin: 0; /*Rimuove i margini predefiniti del titolo */
+}
+
+.navbar-brand {     
+    font-size: 1.5rem;
+    max-width: 100%;      
+}
+
+.breadcrumb-item a {
+    color: #800000 !important;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #6c757d !important;
+}
+
+
+/**da 991px in giù, quindi schermi piccoli**/
+@media (max-width: 991px) {
+    .navbar-brand {
+        white-space: normal; /* titolo va a capo se non ci sta */
+        font-size: 1.1rem; /* scritta più piccola su schermi piccoli */
+        max-width: 70%; /* impedisce al titolo di finire sopra il tasto menu */
+    }
+    .img-carousel {
+        height: 50vh;
+        }
+    .card-img-top {
+        aspect-ratio: 4 / 3; 
+    }
+    .sidebar-filtri {        
+        border-right: none !important;
+        border-bottom: 1px solid #dee2e6;        
+        padding-right: 0;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+    #map {
+        height: 400px !important; /* mappa più piccola su mobile */
+    }
+    /* bottoni uno sopra l'altro */
+    .btn-group {
+        display: flex !important;
+        flex-direction: column;
+        width: 100%; /* occupano l'intera larghezza */
+    }
+
+    .btn {
+        margin-bottom: 5px; /* spazio sotto a ogni bottone */
+        border-radius: 6px !important; /* arrotonda gli angoli dei bottoni */
+    }
+
+    #network {
+        height: 400px !important;
+        margin-bottom: 20px;
+    }
+
+    /* 3. La sidebar finisce sotto il grafo */
+    #info-panel {
+        height: auto !important; /* si allunga in base al contenuto */
+        overflow-y: auto; /* scrollbar interna se il testo è troppo lungo */ 
+    }
+}
+
+/* =========
+   2. HOME
+   ========= */
+.img-carousel { /** imposta le caratteristiche delle immagini del carosello */
+    width: 100%; /** larghezza dell'immagine al 100% del contenitore */
+    object-fit: cover; /** riempie lo spazio senza deformare le foto */
+    object-position: center; /** imposta la foto in modo che sia centrata */
+    height: 85vh; /** altezza dell'immagine al 85% del contenitore**/
+}
+
+/** Imposta le caratteristiche delle card della sezione "Esplora la raccolta" */
+.card-home {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: white; 
+}
+  /** Imposta la transizione per l'effetto hover, in questo caso la trasformazione della posizione della card */
+  /** transition = proprietà CSS che permette di definire gli effetti di transizione tra due stati di un elemento, 
+  in questo caso la trasformazione della posizione della card */
+  /** transform = proprietà CSS che permette di trasformare un elemento, in questo caso la posizione della card */
+  /** ease = funzione di temporizzazione che indica che la transizione avviene in modo graduale, 
+  partendo lentamente, accelerando e poi rallentando di nuovo */
+  /** 0.3s = durata della transizione, in questo caso 0.3 secondi */
+
+
+.card-home:hover { /** Imposta le caratteristiche delle card della sezione "Esplora la raccolta" al passaggio del mouse */
+  transform: translateY(-5px); /** Sposta la card verso l'alto di 5 pixel al passaggio del mouse */
+  box-shadow: 0 10px 20px black !important;
+}
+
+/* ================
+   3. PROTAGONISTI
+   ================ */
+
+/** Imposta le caratteristiche delle card dei Protagonisti */
+.card-protagonisti {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+}
+
+.card-protagonisti:hover { /* Effetto hover per le card dei protagonisti */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px black !important; 
+    /** tre valori numerici seguiti da un colore = coordinate e caratteristiche dell'ombra:
+    0 = spostamento orizzontale dell'ombra (nessuno in questo caso)
+    10px = spostamento verticale dell'ombra (10 pixel verso il basso)
+    20px = sfocatura dell'ombra (20 pixel di sfocatura)
+    rgba(3, 3, 3, 0.15) = colore dell'ombra (nero con trasparenza del 15%) */
+}
+
+/* Imposta le caratteristiche delle immagini delle card Protagonisti */
+.card-protagonisti .card-img-top {
+    width: 100%;
+    /** crea uno spazio nel quale inserire le immagini indipendentemente dalle dimensioni originali,
+    in modo che tutte le card abbiano la stessa dimensione **/
+    aspect-ratio: 1 / 1; 
+    
+    /* Taglia l'immagine per riempire lo spazio senza deformarla */
+    object-fit: cover; 
+    
+    /* Centra l'immagine sia in orizzontale che in verticale */
+    object-position: center; 
+    
+    border-top-left-radius: calc(0.375rem - 1px); /* Mantiene gli angoli arrotondati di Bootstrap */
+    border-top-right-radius: calc(0.375rem - 1px);
+}
+
+/* bordo laterale della sidebar */
+.sidebar-filtri {
+    border-right: 1px solid #dee2e6; /* Bordo a destra per separare dai contenuti */
+    padding-right: 2rem;
+}
+
+/* ====================
+   4. SCHEDA PERSONALE
+   ==================== */
+
+/* Giustifica i testi lunghi delle biografie */
+.card-text p {
+    text-align: justify; 
+    margin-bottom: 1.2rem;
+}
+
+/* Stile delle immagini */
+.figure-img {
+    width:100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: cover;
+}
+
+.accordion-body {
+    text-align: justify !important;
+}
+
+/* Rende gli accordion più puliti */
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa;
+    color: #800000;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0,0,0,.125);
+}
+
+.link-nota {
+    text-decoration: none;
+    font-weight: bold;
+    color: #800000;
+    padding: 0 2px;
+}
+.link-nota:hover {
+    background-color: #f8f9fa;
+}
+.sezione-note p {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+
+/* ==========
+   5. MAPPA
+   ========== */
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+.custom-div-icon {
+    background: none !important;
+    border: none !important;
+}
+
+.marker-pin {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    color: white;
+}
+
+
+.marker-istituzione { background-color: #800000; }
+.marker-rifugio { background-color: #305f57; }   
+.marker-ente-pubblico { background-color: #3a3aab; } 
+.marker-citta { background-color: #c2bf16; }     
+.marker-default { background-color: #6c757d; }   
+
+
+.marker-pin i {
+    font-size: 15px;
+}
+
+#filtro-protagonista {
+    max-height: 300px;  
+    overflow-y: auto;     /* Se i nomi sono troppi (non ci stanno), appare la scrollbar interna */
+    width: 250px; 
+}
+
+/* ====================
+   5. LINEA DEL TEMPO
+   ==================== */
+
+
+/* ===========
+   6. NETWORK
+   ============ */
+
+#network {
+    width: 100%;
+    height: 600px;
+    background-color: #fff; 
+    border: 1px solid #ddd;
+}
+
+#network:active {
+    cursor: grabbing; /* cambia icona del mouse */
+}
+
+#info-panel {  
+    width: 100%;
+    height: 600px;    
+    background-color: #fff;  
+    border: 1px solid #dee2e6;     
+    overflow-y: auto; /* scrollbar interna se il testo è troppo lungo */
+    display: flex; /* allinea gli elementi interni (testo, titolo ecc) */
+    flex-direction: column; /* incolonna gli elementi */
+}
