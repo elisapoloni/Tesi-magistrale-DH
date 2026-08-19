@@ -34,7 +34,7 @@ function mostraProtagonisti(protagonisti) {
   for (let i = 0; i < protagonisti.length; i++) {
     const p = protagonisti[i];
     
-    if (p.ruolo_card === "protagonista"){
+    if (p.ruolo_card === "protagonista" && p.img){
     
         cardProtagonisti +=
         // cardProtagonisti += significa che deve aggiungere al contenuto della variabile cardProtagonisti (il risultato dei cicli) il codice che segue
@@ -57,13 +57,13 @@ function mostraProtagonisti(protagonisti) {
                         </p> <!-- text-muted = testo grigio; flex-grow-1 = riepie lo spazio disponibile per spingere il bottone in basso in modo che siano tutti allineati-->
                         
                         <div class="mt-3">
-                            <a href="${protagonisti[i].cognome.toLowerCase()}.html" class="btn btn-dark w-100">Scheda</a>
+                            <a href="${protagonisti[i].cognome.toLowerCase()}.html" class="btn btn-dark w-100"><i class="bi bi-person-badge me-2"></i>Scheda dettagliata</a>
                         </div>
                     </div>
                 </div>
             </div>`;
     
-    }
+        }
     }
 
     document.getElementById("container-protagonisti").innerHTML = cardProtagonisti;
@@ -149,6 +149,26 @@ function applicaFiltro() {
     // funzione viene richiamata ma al posto di dare tutti i dati del json dò quello che ho appena calcolato
     mostraProtagonisti(risultatiFiltrati);
 }
+
+function resetFiltri() {
+    // cerca tutti i checkbox della pagina
+    // uso form-check-input in modo da andare a prendere tutti i checkbox
+    let tuttiICheckbox = document.querySelectorAll(".form-check-input");
+
+    // avvia un ciclo che fa passare tutti i checkbox
+    for (let i = 0; i < tuttiICheckbox.length; i++) {
+        // .checked è una proprietà booleana dell'elemento html (booleana = può avere solo due stati: true (vero/acceso) o false (falso/spento))
+        // = false -> toglie la spunta blu dal quadratino
+        tuttiICheckbox[i].checked = false;
+    }
+
+    // richiamo la funzione
+    mostraProtagonisti(protagonisti);
+}
+
+// dico al bottone Reset di ascoltare il click e applicare quello che ho definito nella funzione resetFiltri
+// change è divero da click. change viene usato quando viene cliccato qualcosa che cambia valore; click invece per bottone che non cambia valore
+document.getElementById("btn-reset").addEventListener("click", resetFiltri);
 
 
 
