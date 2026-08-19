@@ -47,7 +47,55 @@
 				<nav aria-label="breadcrumb">
             		<ol class="breadcrumb" id="breadcrumb-placeholder"></ol>
         		</nav>
-			    <!-- filtri -->		        	
+				<div class="row">
+					<div class="col-12">
+					<!-- card intro -->
+					<div class="card border-0 shadow-sm mb-4">
+						<div class="card-body p-4">
+							<h5 class="card-title fw-bold" style="color: #800000;">Viaggia nello spazio</h5>
+							<p class="card-text" style="text-align: justify;">
+								La mappa interattiva permette di visualizzare i luoghi chiave dove si sono svolte le operazioni di salvataggio del patrimonio artistico durante la Seconda Guerra Mondiale. 
+								I marcatori sono differenziati per <strong>tipologia</strong> per distinguere le istituzioni da cui vengono spedite le opere che devono essere protette, i rifugi che accolgono queste opere, gli enti pubblici che gestivano decisioni amministrative e le città. 
+								È possibile <strong>filtrare</strong> i luoghi selezionando uno o più protagonisti dal menu laterale per vedere il raggio d'azione del loro operato.
+							</p>
+							<hr>
+							<!-- legenda -->
+							<h6 class="fw-bold mb-3">Legenda dei marcatori:</h6>
+							<div class="row g-3">
+								<!-- Istituzione -->
+								<div class="col-6 col-md-3 d-flex align-items-center">
+									<div class="marker-pin marker-istituzione me-2">
+										<i class="bi bi-bank"></i>
+									</div>
+									<span>Istituzione</span>
+								</div>
+								<!-- Rifugio -->
+								<div class="col-6 col-md-3 d-flex align-items-center">
+									<div class="marker-pin marker-rifugio me-2">
+										<i class="bi bi-exclamation-circle-fill"></i>
+									</div>
+									<span>Rifugio</span>
+								</div>
+								<!-- Ente Pubblico -->
+								<div class="col-6 col-md-3 d-flex align-items-center">
+									<div class="marker-pin marker-ente-pubblico me-2">
+										<i class="bi bi-building"></i>
+									</div>
+									<span>Ente Pubblico</span>
+								</div>
+								<!-- Città -->
+								<div class="col-6 col-md-3 d-flex align-items-center">
+									<div class="marker-pin marker-citta me-2">
+										<i class="bi bi-browser-safari"></i>
+									</div>
+									<span>Città</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>		  				
+			    <!-- filtri -->     	
 				<div class="row">
 					<!-- col-12 su mobile (sopra), col-lg-2 su desktop (lato) -->
             		<aside class="col-12 col-lg-2 sidebar-filtri mb-4">
@@ -61,9 +109,24 @@
                             		<!-- JS metterà qui i nomi dei protagonisti per il filtro tramite l'id -->
                         			</ul>
 								</div>
+								<div class="dropdown mb-3">
+							  		<button class="btn btn-secondary dropdown-toggle w-100 text-center" type="button" data-bs-toggle="dropdown">
+                            			Tipologia di luogo
+                        			</button>
+                        			<ul class="dropdown-menu w-100 p-2" id="filtro-tipologia">
+                            		<!-- JS metterà qui le tipologie di luogo per il filtro tramite l'id -->
+                        			</ul>
+								</div>
+								<!-- spiegazione filtri -->
+								<div id="spiegazione-filtri" class="mt-4 mb-2 p-2 bg-light border rounded shadow-sm">
+									<h6 class="small fw-bold text-dark"><i class="bi bi-info-circle-fill me-1"></i> Logica dei filtri:</h6>
+									<p id="testo-spiegazione-filtri" class="small text-muted mb-0" style="font-size: 0.8rem; text-align: justify;">
+										È possibile filtrare per protagonista e per tipologia di luogo
+									</p>
+								</div>
 								<!-- Bottone Reset -->
-                    			<button class="btn btn-link btn-sm text-decoration-none text-muted w-100 mt-2" id="btn-reset">
-                        			Mostra tutti i luoghi
+                    			<button class="btn btn-outline-light text-dark btn-link btn-sm text-decoration-none text-muted w-100 mt-2" id="btn-reset">
+                        			<i class="bi bi-arrow-counterclockwise"></i> Mostra tutti i luoghi
                     			</button>
                 		</div>
 					</aside>
@@ -72,6 +135,18 @@
 							<div id="map" class="shadow-sm border rounded mt-1 mb-3"></div>
 					</div> <!--chiusa colonna dx-->
 				</div> <!--chiusa row-->
+				<div class="row">
+					<div class="col-12">
+						<div class="card border-0 shadow-sm mb-4">
+								<div class="card-body p-4">
+									<h5 class="card-title fw-bold" style="color: #800000;">Risultati</h5>
+									<p class="card-text" style="text-align: justify;">
+										Da queste visualizzazione notiamo che ...
+									</p>
+								</div>
+						</div>
+					</div>
+				</div>
 			</div> <!--chiuso container-fluid-->
 		</section>
 	</main>
