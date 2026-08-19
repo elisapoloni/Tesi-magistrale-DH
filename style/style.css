@@ -230,14 +230,6 @@
     color: white;
 }
 
-
-.marker-istituzione { background-color: #800000; }
-.marker-rifugio { background-color: #305f57; }   
-.marker-ente-pubblico { background-color: #3a3aab; } 
-.marker-citta { background-color: #c2bf16; }     
-.marker-default { background-color: #6c757d; }   
-
-
 .marker-pin i {
     font-size: 15px;
 }
@@ -248,10 +240,10 @@
     width: 250px; 
 }
 
+
 /* ====================
    5. LINEA DEL TEMPO
    ==================== */
-
 
 /* ===========
    6. NETWORK
@@ -276,4 +268,52 @@
     overflow-y: auto; /* scrollbar interna se il testo è troppo lungo */
     display: flex; /* allinea gli elementi interni (testo, titolo ecc) */
     flex-direction: column; /* incolonna gli elementi */
+}
+
+#filtro-protagonista-resp, #filtro-protagonista-flusso, #filtro-rifugio-flusso {
+    max-height: 300px;  
+    overflow-y: auto;     /* Se i nomi sono troppi (non ci stanno), appare la scrollbar interna */
+    width: 250px; 
+}
+
+/* ===========
+   6. COLORI
+   ============ */
+
+/* definizione centralizzata dei colori */
+:root {
+    --color-protagonista: #d4a42a;
+    --color-altro: #6c757d;
+    --color-istituzione: #c93e3e;
+    --color-ente-pubblico: #3a3aab;
+    --color-rifugio: #305f57;
+    --color-città: #c2bf16;
+    --color-default: #c5dfd3;
+}
+
+/* marcatori mappa (usano le variabili) */
+.marker-citta { background-color: #c2bf16; } 
+.marker-istituzione { background-color: var(--color-istituzione); }
+.marker-rifugio { background-color: var(--color-rifugio); }
+.marker-ente-pubblico { background-color: var(--color-ente-pubblico); }
+.marker-default { background-color: var(--color-default); }
+
+.legenda-protagonista { background-color: var(--color-protagonista); }
+.legenda-istituzione { background-color: var(--color-istituzione); }
+.legenda-rifugio { background-color: var(--color-rifugio); }
+.legenda-ente-pubblico { background-color: var(--color-ente-pubblico); }
+.legenda-altro { background-color: var(--color-altro); }
+.legenda-organizzazione, .legenda-default { 
+    background-color: var(--color-default); 
+}
+
+/* classi per i badge del network (usano le stesse variabili) */
+.badge-protagonista { background-color: var(--color-protagonista) !important; color: #000; }
+.badge-altro { background-color: var(--color-altro) !important; color: #fff; }
+.badge-istituzione { background-color: var(--color-istituzione) !important; color: #fff; }
+.badge-rifugio { background-color: var(--color-rifugio) !important; color: #fff; }
+.badge-ente-pubblico { background-color: var(--color-ente-pubblico) !important; color: #fff; }
+.badge-organizzazione, .badge-default { 
+    background-color: var(--color-default) !important; 
+    color: #000 !important; 
 }
