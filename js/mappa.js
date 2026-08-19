@@ -2,7 +2,7 @@
 // il punto (operatore di accesso) collega un oggetto all'altro
 // con L apro la libreria Leaflet, il punto mi permette di accedere alla funzione map() che crea la mappa e l'altro punto mi permette di accedere alla funzione setView()
 // setView([lat, lng], zoom) centra la mappa sull'Italia
-var map = L.map('map').setView([42.5000, 12.5000], 6);
+var map = L.map('map').setView([42.5000, 12.5000], 5);
 // creo una variabile che si chiama map e che contiene la mappa centrata sull'Italia con zoom 6 e che inserirò nel div con id="map" (che si trova in mappa.html)
 
 // aggiungo i tiles = le mattonelle che compongono la mappa. In questo caso uso OpenStreetMap
@@ -57,6 +57,7 @@ async function caricaDatabase() {
 
     // richiamo le funzioni dentro la dichiarazione di caricaDatabase perchè hanno bisogno dei dei dati per funzionare 
     creaFiltroProtagonisti();
+    creaFiltroTipologie();
     disegnaMappa(tuttiILuoghi);
     // tuttiILuoghi è l'argomento che passo alla funzione creaMarcatori per creare i marker sulla mappa
 
@@ -148,8 +149,21 @@ function creaFiltroProtagonisti() {
     const filtroP = document.getElementById("filtro-protagonista");
     let htmlProtagonisti = "";
 
+    // lista in ordine alfabetico dei protagonisti 
+    let listaOrdinata = [];
     for (let i = 0; i < tuttiIProtagonisti.length; i++){
-        let p = tuttiIProtagonisti[i];
+        if (tuttiIProtagonisti[i].ruolo_card === "protagonista") {
+            listaOrdinata.push(tuttiIProtagonisti[i]);
+        }
+    }
+
+    // metto in ordine alfabetico per cognome
+    listaOrdinata.sort(function(a, b) {
+        return a.cognome.localeCompare(b.cognome);
+    });
+
+    for (let i = 0; i < listaOrdinata.length; i++){
+        let p = listaOrdinata[i];
         // prende solo chi ha ruolo_card = protagonista (uguale e dello stesso tipo)
         if (p.ruolo_card === "protagonista") {
             htmlProtagonisti += `
@@ -169,52 +183,96 @@ function creaFiltroProtagonisti() {
     // avvio un ciclo che li fa passare tutti
     for (let j = 0; j < checkboxP.length; j++) {
         // per ognuno applico il metodo che "ascolta gli eventi"
-        checkboxP[j].addEventListener("change", applicaFiltroProtagonisti);
+        checkboxP[j].addEventListener("change", applicaFiltri);
         // l'evento che deve ascoltare è "change", quando avviene deve fare quello che viene definito nella funzione applicaFiltroProtagonisti
     }
 }
 
-function applicaFiltroProtagonisti() {
-    // raccolgo nella variabile il checkbox selezionato tramite la classe scelta-p:checked
-    let checkboxSelezionatiP = document.querySelectorAll(".scelta-p:checked");
+function creaFiltroTipologie() {
+    const filtroT = document.getElementById("filtro-tipologia");
+    let tipologie = [];
 
-    // se la lunghezza dei checkboxSelezionatiP è uguale e dello stesso tipo di 0 -> non è stato selezionato niente
-    if (checkboxSelezionatiP.length === 0){
-        disegnaMappa(tuttiILuoghi); // quindi richiamo la funzione per disegnare la mappa con l'argomento tuttiILuoghi
-        return; // fermo il calcolo, altrimenti andrebbe avanti a leggere il codice
-        // non c'è bisogno di avviare il ciclo per cercare i protagonisti selezionati perchè non c'è nessun checkbox selezionato
+    // trovo tutte le tipologie presenti nel JSON senza duplicati
+    for (let i = 0; i < tuttiILuoghi.length; i++) {
+        let t = tuttiILuoghi[i].tipologia_loc;
+        if (t && tipologie.indexOf(t) === -1) {
+            tipologie.push(t);
+        }
     }
-            let risultati = []; // variabile che conterrà i risultati del ciclo = quali sono i protagonisti filtrati e di conseguenza i luoghi correlati
 
-            // avvio un ciclo che fa passare tutti i checkbox selezionati
-            for (let i = 0; i < checkboxSelezionatiP.length; i++){
-                // per ogni checkbox selezionato va a prendere il value (id del protagonista)
-                let idProtagonistiSelezionati = checkboxSelezionatiP[i].value; // es: PR
+    let htmlTipologie = "";
+    for (let j = 0; j < tipologie.length; j++) {
+        htmlTipologie += `
+            <li>
+                <label class="dropdown-item d-flex align-items-center ps-1 py-2" style="cursor:pointer;">
+                    <input type="checkbox" class="form-check-input scelta-t me-2 mt-0" value="${tipologie[j]}"> 
+                    <span class="small text-capitalize">${tipologie[j].replace('-', ' ')}</span>
+                </label>
+            </li>`;
+    }
+    filtroT.innerHTML = htmlTipologie;
 
-                let datiProtagonista = oggettoProtagonista[idProtagonistiSelezionati];
-                // uso l'id del protagonista selezionato per entrare in oggettoProtagonista -> es: oggettoProtagonista[PR]
-                // datiProtagonista = oggettoProtagonista[PR] -> datiProtagonista contiene l'oggetto intero dei dati di PR, quindi nome cognome ecc
+    // aggiungo listener
+    let checkboxT = document.querySelectorAll(".scelta-t");
+    for (let k = 0; k < checkboxT.length; k++) {
+        checkboxT[k].addEventListener("change", applicaFiltri);
+    }
+}
 
-                // se dentro questo oggetto c'è id_luoghi, avvio un ciclo che li fa passare tutti
-                if (datiProtagonista.id_luoghi) {
-                    for (let j = 0; j < datiProtagonista.id_luoghi.length; j++) {
-                        let idLuogo = datiProtagonista.id_luoghi[j]; // idLuogo è il j-esimo luogo dei luoghi correlati a datiProtagonista
-                        // es: datiProtagonista = PR, il j-esimo luogo è "Rocca_loc"
+function applicaFiltri() {
+    // raccolgo nella variabile il checkbox selezionato tramite la classe scelta-p:checked
+    let checkP = document.querySelectorAll(".scelta-p:checked");
+    let checkT = document.querySelectorAll(".scelta-t:checked");
 
-                        // uso questo id per andare a prendere il suo oggetto completo in oggettoLuogo
-                        let luogoCompleto = oggettoLuogo[idLuogo];
-                        // es: luogoCompleto = oggettoLuogo[Rocca_loc] -> luogoCompleto è l'oggetto completo con tutti i dati del luogo Rocca_loc
+    let protagonistiSelezionati = [];
+    for (let i = 0; i < checkP.length; i++) {
+        protagonistiSelezionati.push(checkP[i].value); 
+    }
 
-                        // aggiungo ai risultati con .push il luogo che ho trovato con tutti i suoi dati a ogni ciclo
-                        // includes() metodo di js per controllare se un valore è già presente nell'array
-                        // false = non è presente
-                        if (luogoCompleto && risultati.includes(luogoCompleto) == false) {
-                            risultati.push(luogoCompleto);
-                        }
-                    }
+    let tipologieSelezionate = [];
+    for (let j = 0; j < checkT.length; j++) {
+        tipologieSelezionate.push(checkT[j].value); 
+    }
+
+    // se la lunghezza dei checkbox selezionati è uguale e dello stesso tipo di 0 -> non è stato selezionato niente
+    if (protagonistiSelezionati.length === 0 && tipologieSelezionate.length === 0) {
+        disegnaMappa(tuttiILuoghi);
+        return;
+    }
+
+    let risultati = []; // variabile che conterrà i risultati del ciclo = quali sono i protagonisti filtrati e/o la tipologia selezionata
+    
+    // selezionata solo una tipologia e nessun protagonista
+    if (protagonistiSelezionati.length === 0) {
+        for (let l = 0; l < tuttiILuoghi.length; l++) {
+            if (tipologieSelezionate.indexOf(tuttiILuoghi[l].tipologia_loc) !== -1) {
+                risultati.push(tuttiILuoghi[l]);
+            }
+        }
+    }  else { // slezionato anche un protagonista
+        let luoghiDelProtagonista = new Set();
+        for (let p = 0; p < protagonistiSelezionati.length; p++) {
+            let idProt = protagonistiSelezionati[p];
+            let datiP = oggettoProtagonista[idProt];
+            if (datiP.id_luoghi) {
+                for (let k = 0; k < datiP.id_luoghi.length; k++) {
+                    luoghiDelProtagonista.add(datiP.id_luoghi[k]);
                 }
             }
+        }
 
+        // tra i luoghi dei protagonisti scelti, tengo solo quelli che della tipologia (se selezionata)
+        luoghiDelProtagonista.forEach(function(idLuogo) {
+            let luogo = oggettoLuogo[idLuogo];
+            if (luogo) {
+                let passaTipo = tipologieSelezionate.length === 0 || tipologieSelezionate.indexOf(luogo.tipologia_loc) !== -1;
+                if (passaTipo) {
+                    risultati.push(luogo);
+                }
+            }
+        });
+    }
+            
 // chiamo la funzione per disegnare i marcatori e gli do come argomento i luoghi filtrati
 disegnaMappa(risultati);
 
