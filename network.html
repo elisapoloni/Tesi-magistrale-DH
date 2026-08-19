@@ -45,6 +45,65 @@
 				<nav aria-label="breadcrumb">
             		<ol class="breadcrumb" id="breadcrumb-placeholder"></ol>
         		</nav>
+				<!-- card intro -->
+				<div class="row">
+					<div class="col-12">
+						<div class="card border-0 shadow-sm mb-4">
+							<div class="card-body p-4">
+								<h5 class="card-title fw-bold" style="color: #800000;">Esplora le relazioni</h5>
+								<p class="card-text" style="text-align: justify;">
+									Attraverso i tre grafi sottostanti è possibile analizzare le diverse dimensioni del network:
+								
+								<ul>
+									<li><strong>Grafo delle collaborazioni:</strong> mostra i legami tra i protagonisti e le figure di corredo.</li>
+									<li><strong>Grafo delle responsabilità:</strong> collega i protagonisti a istituzioni e rifugi che (???).</li>
+									<li><strong>Flusso delle opere:</strong> visualizza il movimento dei beni culturali dai musei di origine ai luoghi di ricovero.</li>
+								</ul>
+
+									Inoltre, per ogni grafo è possibile filtrare i nodi in base all'info che si sta cercando (???)
+								</p>
+								
+								<hr>
+								
+								<h6 class="fw-bold mb-3">Legenda dei nodi:</h6>
+								<div class="row g-3">
+									<!-- Protagonista -->
+									<div class="col-6 col-md-4 col-lg-2 d-flex align-items-center">
+										<div class="me-2 legenda-protagonista" style="width: 18px; height: 18px; border-radius: 50%;"></div>
+										<span class="small">Protagonista</span>
+									</div>
+									<!-- Istituzione -->
+									<div class="col-6 col-md-4 col-lg-2 d-flex align-items-center">
+										<div class="me-2 legenda-istituzione" style="width: 18px; height: 18px; border-radius: 4px;"></div>
+										<span class="small">Istituzione</span>
+									</div>
+									<!-- Rifugio -->
+									<div class="col-6 col-md-4 col-lg-2 d-flex align-items-center">
+										<!-- Rombo per il rifugio -->
+										<div class="me-2 legenda-rifugio" style="width: 16px; height: 16px; transform: rotate(45deg); border-radius: 4px;"></div>
+										<span class="small">Rifugio</span>
+									</div>
+									<!-- Ente Pubblico -->
+									<div class="col-6 col-md-4 col-lg-2 d-flex align-items-center">
+										<div class="me-2 legenda-ente-pubblico" style="width: 18px; height: 18px; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); border-radius: 4px;"></div>
+										<span class="small">Ente Pubblico</span>
+									</div>
+									<!-- Altre persone -->
+									<div class="col-6 col-md-4 col-lg-2 d-flex align-items-center">
+										<div class="me-2 legenda-altro" style="width: 18px; height: 18px; border-radius: 50%;"></div>
+										<span class="small">Altri collaboratori</span>
+									</div>
+									<!-- default -->
+									<div class="col-6 col-md-4 col-lg-2 d-flex align-items-center">
+										<div class="me-2 legenda-default" style="width: 18px; height: 18px; border-radius: 50%;"></div>
+										<span class="small">Errore nel caricamento</span>
+									</div>
+								</div>
+								<p class="text-muted small mt-3 italic"><i class="bi bi-mouse me-1"></i> Puoi trascinare i nodi, zoomare con la rotellina e cliccare su ogni elemento per leggere i dettagli nella barra descrittiva.</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			        <!-- bottoni per cambiare grafo -->
                     <div class="row mb-4">
                         <div class="col-12 text-center">
@@ -62,12 +121,61 @@
                         </div>
                     </div>
 
-                    <!-- grafo e info -->
+                    <!-- filtri, grafo e info -->
 
                     <div class="row mb-4">
+						<!-- colonna filtri -->
+						<aside class="col-12 col-lg-2 sidebar-filtri mb-4">
+							<div class="sticky-lg-top" style="top: 20px;">
+								<h5 class="mb-3">Filtra per:</h5>
+								<!-- filtro compare solo per il grafo responsabilità (protagonista) -->
+								<div id="filtri-responsabilita" style="display:none;">
+									<div class="dropdown mb-3">
+										<button class="btn btn-secondary dropdown-toggle w-100 btn-sm" type="button" data-bs-toggle="dropdown">
+											Protagonista
+										</button>
+										<ul class="dropdown-menu w-100 p-2" id="filtro-protagonista-resp">
+											<!-- JS caricherà i nomi qui -->
+										</ul>
+									</div>
+								</div>
+								<!-- filtro compare solo per il grafo flusso (protagonista e rifugio) -->
+								<div id="filtri-flusso" style="display:none;">
+									<div class="dropdown mb-2">
+										<button class="btn btn-secondary dropdown-toggle w-100 btn-sm" type="button" data-bs-toggle="dropdown">
+											Protagonista
+										</button>
+										<ul class="dropdown-menu w-100 p-2" id="filtro-protagonista-flusso">
+											<!-- JS caricherà i nomi qui -->
+										</ul>
+									</div>
+									<div class="dropdown mb-2">
+										<button class="btn btn-secondary dropdown-toggle w-100 btn-sm" type="button" data-bs-toggle="dropdown">
+											Rifugio
+										</button>
+										<ul class="dropdown-menu w-100 p-2" id="filtro-rifugio-flusso">
+											<!-- JS caricherà i nomi qui -->
+										</ul>
+									</div>
+								</div>
+								<div id="filtri-collaborazioni">
+									<p class="small text-muted italic">Nessun filtro disponibile per questo grafo.</p>
+								</div>
+								<!-- spiegazione filtri -->
+								<div id="spiegazione-filtri" class="mt-4 mb-2 p-2 bg-light border rounded shadow-sm">
+									<h6 class="small fw-bold text-dark"><i class="bi bi-info-circle-fill me-1"></i> Logica dei filtri:</h6>
+									<p id="testo-spiegazione-filtri" class="small text-muted mb-0" style="font-size: 0.8rem; text-align: justify;">
+										<!-- testo cambia con JS -->
+									</p>
+								</div>
+								<button class="btn btn-outline-light text-dark btn-link btn-sm text-decoration-none text-muted w-100 mt-2" id="btn-reset-network">
+									<i class="bi bi-arrow-counterclockwise"></i> Mostra tutto
+								</button>
+							</div>
+						</aside>
 
                         <!-- colonna sx: grafo -->
-                        <div class="col-lg-9 col-md-12">
+                        <div class="col-lg-7 col-md-12">
                             <div id="network" class="shadow-sm border rounded bg-white"></div>
                         </div>
 
@@ -86,6 +194,18 @@
                             </div>
                         </div>
                     </div>
+					<div class="row">
+					<div class="col-12">
+						<div class="card border-0 shadow-sm mb-4">
+								<div class="card-body p-4">
+									<h5 class="card-title fw-bold" style="color: #800000;">Risultati</h5>
+									<p class="card-text" style="text-align: justify;">
+										Da questa visualizzazione notiamo che ...
+									</p>
+								</div>
+						</div>
+					</div>
+				</div>
         </section>
     </main>
 	<!--footer-->
