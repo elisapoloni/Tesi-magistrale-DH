@@ -19,12 +19,15 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // mettiamo i marcatori su questo strato pittosto che direttamente sulla mappa così con un unico comando riusciamo a cancellare tutti i marcatori quando filtriamo
 // L.layerGroup() = Leaflet crea un oggetto che non contiene ancora nessun marcatore; si riempirà quando userò comando .addTo(layerMarcatori)
 let layerMarcatori = L.layerGroup().addTo(map);
+let layerSbarco = L.layerGroup(); 
 
 
 let tuttiIProtagonisti = []; // variabile che contiene tutto il blocco delle persone del JSON, è un piccolo pezzo di database 
 let tuttiILuoghi = [];
+let tuttiSbarchi = [];
 let oggettoLuogo = {}; // oggetto vuoto che conterrà oggetti del tipo [chiave] = valore
 let oggettoProtagonista = {} 
+
 
 async function caricaDatabase() {
     const response = await fetch("json/database.json");
@@ -35,7 +38,7 @@ async function caricaDatabase() {
     
     tuttiIProtagonisti = data.persone;
     tuttiILuoghi = data.luoghi; // data è il mio oggetto JavaScript e con il punto apro dentro l'oggetto solo la parte che mi interessa, cioè luoghi
-    
+    tuttiSbarchi = data.sbarco;
 
     // avvio ciclo che fa passare tutti i luoghi
     for (let i = 0; i < tuttiILuoghi.length; i++) {
@@ -58,8 +61,12 @@ async function caricaDatabase() {
     // richiamo le funzioni dentro la dichiarazione di caricaDatabase perchè hanno bisogno dei dei dati per funzionare 
     creaFiltroProtagonisti();
     creaFiltroTipologie();
+    gestisciLineaGotica();
     disegnaMappa(tuttiILuoghi);
     // tuttiILuoghi è l'argomento che passo alla funzione creaMarcatori per creare i marker sulla mappa
+    ottieniSbarco(tuttiSbarchi); 
+    gestisciBottoneSbarco();
+
 
 }
 
@@ -297,6 +304,73 @@ function resetFiltri() {
 // dico al bottone Reset di ascoltare il click e applicare quello che ho definito nella funzione resetFiltri
 // change è divero da click. change viene usato quando viene cliccato qualcosa che cambia valore; click invece per bottone che non cambia valore
 document.getElementById("btn-reset").addEventListener("click", resetFiltri);
+
+// coordinate geografiche della Linea Gotica (approssimative Massa-Pesaro)
+let coordinateGotica = [
+    [44.037, 10.133], // Massa
+    [44.112, 10.457], // Garfagnana
+    [44.200, 10.800], // Abetone
+    [44.150, 11.250], // Passo della Futa
+    [43.850, 11.950], // Badia Prataglia
+    [43.781, 12.336], // Carpegna
+    [43.912, 12.915]  // Pesaro
+];
+
+// poligono Leaflet
+let lineaGotica = L.polyline(coordinateGotica, {
+    color: '#800000', // colore
+    weight: 4,        // spessore linea
+    opacity: 0.6,     // trasparenza
+    dashArray: '10, 10', // linea tratteggiata
+    lineJoin: 'round'
+});
+
+// popup alla linea per spiegare cos'è se l'utente ci clicca sopra
+lineaGotica.bindPopup("<b>Linea Gotica</b><br>Fronte di guerra tra l'agosto del 1944 e il 21 aprile del 1945.");
+
+// funzione per gestire l'accensione/spegnimento bottone
+function gestisciLineaGotica() {
+    var checkbox = document.getElementById('check-gotica');
+    
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            lineaGotica.addTo(map); // aggiunge la linea alla variabile map
+        } else {
+            map.removeLayer(lineaGotica); // rimuove la linea
+        }
+    });
+}
+
+function ottieniSbarco(punti) {
+    for (var i = 0; i < punti.length; i++) {
+        var p = punti[i];
+        
+        var iconaSbarco = L.divIcon({
+            html: '<div class="marker-pin marker-sbarco"><i class="bi bi-flag-fill"></i></div>',
+            className: 'custom-div-icon',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
+
+        L.marker([p.lat, p.lng], { icon: iconaSbarco })
+            .bindPopup("<b>Sbarco Alleato: " + p.nome_loc + "</b><br><p class='small m-0'>" + p.note_loc + "</p>")
+            .addTo(layerSbarco); 
+    }
+}
+
+function gestisciBottoneSbarco() {
+    var checkSbarco = document.getElementById('check-sbarco');
+    if (checkSbarco) {
+        checkSbarco.addEventListener('change', function() {
+            if (this.checked) {
+                layerSbarco.addTo(map);
+            } else {
+                map.removeLayer(layerSbarco);
+            }
+        });
+    }
+}
 
 
 // richiamo alla fine perchè prima ho spiegato al browser tutto quello che deve sapere per funzionare
