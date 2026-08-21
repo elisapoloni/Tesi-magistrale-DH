@@ -240,10 +240,16 @@
     width: 250px; 
 }
 
+.form-check-input:checked {
+    background-color: #800000; /* per bottone Linea Gotica */
+    border-color: #800000;
+}
 
 /* ====================
    5. LINEA DEL TEMPO
    ==================== */
+
+
 
 /* ===========
    6. NETWORK
@@ -280,7 +286,7 @@
    6. COLORI
    ============ */
 
-/* definizione centralizzata dei colori */
+/* definizione dei colori */
 :root {
     --color-protagonista: #d4a42a;
     --color-altro: #6c757d;
@@ -289,14 +295,23 @@
     --color-rifugio: #305f57;
     --color-città: #c2bf16;
     --color-default: #c5dfd3;
+    --color-sbarco: #4682b4; 
 }
 
-/* marcatori mappa (usano le variabili) */
+/* marcatori mappa */
 .marker-citta { background-color: #c2bf16; } 
 .marker-istituzione { background-color: var(--color-istituzione); }
 .marker-rifugio { background-color: var(--color-rifugio); }
 .marker-ente-pubblico { background-color: var(--color-ente-pubblico); }
 .marker-default { background-color: var(--color-default); }
+.marker-sbarco { 
+    background-color: var(--color-sbarco) !important; 
+}
+.marker-sbarco i {
+    color: white !important;
+    font-size: 16px !important;
+    display: flex !important;
+}
 
 .legenda-protagonista { background-color: var(--color-protagonista); }
 .legenda-istituzione { background-color: var(--color-istituzione); }
@@ -306,8 +321,14 @@
 .legenda-organizzazione, .legenda-default { 
     background-color: var(--color-default); 
 }
+.legenda-linea-gotica {
+    width: 30px;
+    height: 0px;
+    border-top: 3px dashed #800000; /* Stesso stile della mappa */
+    margin-top: 2px;
+}
 
-/* classi per i badge del network (usano le stesse variabili) */
+/* classi per i badge del network */
 .badge-protagonista { background-color: var(--color-protagonista) !important; color: #000; }
 .badge-altro { background-color: var(--color-altro) !important; color: #fff; }
 .badge-istituzione { background-color: var(--color-istituzione) !important; color: #fff; }
@@ -317,3 +338,7 @@
     background-color: var(--color-default) !important; 
     color: #000 !important; 
 }
+
+
+
+
