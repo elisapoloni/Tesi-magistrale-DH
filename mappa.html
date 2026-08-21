@@ -61,34 +61,51 @@
 							<hr>
 							<!-- legenda -->
 							<h6 class="fw-bold mb-3">Legenda dei marcatori:</h6>
-							<div class="row g-3">
+							<div class="d-flex flex-wrap align-items-center" style="gap: 100px; row-gap: 15px;">
 								<!-- Istituzione -->
-								<div class="col-6 col-md-3 d-flex align-items-center">
+								<div class="d-flex align-items-center">
 									<div class="marker-pin marker-istituzione me-2">
 										<i class="bi bi-bank"></i>
 									</div>
-									<span>Istituzione</span>
+									<span class="small">Istituzione</span>
 								</div>
+
 								<!-- Rifugio -->
-								<div class="col-6 col-md-3 d-flex align-items-center">
+								<div class="d-flex align-items-center">
 									<div class="marker-pin marker-rifugio me-2">
 										<i class="bi bi-exclamation-circle-fill"></i>
 									</div>
-									<span>Rifugio</span>
+									<span class="small">Rifugio</span>
 								</div>
+
 								<!-- Ente Pubblico -->
-								<div class="col-6 col-md-3 d-flex align-items-center">
+								<div class="d-flex align-items-center">
 									<div class="marker-pin marker-ente-pubblico me-2">
 										<i class="bi bi-building"></i>
 									</div>
-									<span>Ente Pubblico</span>
+									<span class="small">Ente Pubblico</span>
 								</div>
+
 								<!-- Città -->
-								<div class="col-6 col-md-3 d-flex align-items-center">
+								<div class="d-flex align-items-center">
 									<div class="marker-pin marker-citta me-2">
 										<i class="bi bi-browser-safari"></i>
 									</div>
-									<span>Città</span>
+									<span class="small">Città</span>
+								</div>
+
+								<!-- Sbarco -->
+								<div class="d-flex align-items-center">
+									<div class="marker-pin marker-sbarco me-2">
+										<i class="bi bi-flag-fill"></i>
+									</div>
+									<span class="small">Sbarco Alleati</span>
+								</div>
+
+								<!-- Linea Gotica (TRATTEGGIATA) -->
+								<div class="d-flex align-items-center">
+									<div class="me-2 legenda-linea-gotica"></div>
+									<span class="small">Linea Gotica</span>
 								</div>
 							</div>
 						</div>
@@ -117,6 +134,10 @@
                             		<!-- JS metterà qui le tipologie di luogo per il filtro tramite l'id -->
                         			</ul>
 								</div>
+								<!-- Bottone Reset -->
+                    			<button class="btn btn-outline-light text-dark btn-link btn-sm text-decoration-none text-muted w-100 mt-2" id="btn-reset">
+                        			<i class="bi bi-arrow-counterclockwise"></i> Mostra tutti i luoghi
+                    			</button>
 								<!-- spiegazione filtri -->
 								<div id="spiegazione-filtri" class="mt-4 mb-2 p-2 bg-light border rounded shadow-sm">
 									<h6 class="small fw-bold text-dark"><i class="bi bi-info-circle-fill me-1"></i> Logica dei filtri:</h6>
@@ -124,10 +145,30 @@
 										È possibile filtrare per protagonista e per tipologia di luogo
 									</p>
 								</div>
-								<!-- Bottone Reset -->
-                    			<button class="btn btn-outline-light text-dark btn-link btn-sm text-decoration-none text-muted w-100 mt-2" id="btn-reset">
-                        			<i class="bi bi-arrow-counterclockwise"></i> Mostra tutti i luoghi
-                    			</button>
+								<!--bottone Linea Gotica-->
+								<div class="mt-4 p-2 border rounded bg-white shadow-sm">
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="check-gotica" style="cursor: pointer;">
+										<label class="form-check-label small fw-bold text-dark" for="check-gotica" style="cursor: pointer;">
+											Mostra la Linea Gotica
+										</label>
+									</div>
+									<p class="text-muted mb-0" style="font-size: 0.75rem; text-align: justify;">
+										Fronte di guerra tra l'agosto del 1944 e il 21 aprile del 1945.
+									</p>
+								</div>
+								<!--bottone Sbarco alleati-->
+								<div class="mt-4 p-2 border rounded bg-white shadow-sm">
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="check-sbarco" style="cursor: pointer;">
+										<label class="form-check-label small fw-bold text-dark" for="check-sbarco" style="cursor: pointer;">
+											Mostra Sbarco Alleati
+										</label>
+									</div>
+									<p class="text-muted mb-0" style="font-size: 0.75rem; text-align: justify;">
+										Gli alleati sbarcarono in Sicilia tra il 9 e il 10 luglio 1943.
+									</p>
+								</div>							
                 		</div>
 					</aside>
 					<!--colonna dx-->
